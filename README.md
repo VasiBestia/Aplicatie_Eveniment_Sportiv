@@ -80,7 +80,7 @@ Key functionality: The Admin can edit scores and, with a single click, **elimina
 
 ## 👤 Author
 
-Project realized and developed entirely by **[Your Name Here]**.
+Project realized and developed entirely by Vasilescu Alexandru Gabriel.
 
 This project was developed as part of a bachelor's thesis, aiming to digitize the process of organizing sports competitions.
 
