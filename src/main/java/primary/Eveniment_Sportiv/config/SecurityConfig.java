@@ -6,13 +6,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import primary.Eveniment_Sportiv.config.CustomOAuth2UserService;
 
 @Configuration
 public class SecurityConfig {
 
     @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
+
+    @Autowired
     private GoogleLoginSuccessHandler googleLoginSuccessHandler;
 
+    @Autowired
+    private FacebookLoginSuccessHandler facebookLoginSuccessHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -34,8 +40,18 @@ public class SecurityConfig {
 
                 .oauth2Login(oauth -> oauth
                         .loginPage("/login")
-                        .successHandler(googleLoginSuccessHandler)
+                        .successHandler((request, response, authentication) -> {
+                            String clientRegId = ((org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken) authentication)
+                                    .getAuthorizedClientRegistrationId();
+
+                            if ("facebook".equals(clientRegId)) {
+                                facebookLoginSuccessHandler.onAuthenticationSuccess(request, response, authentication);
+                            } else if ("google".equals(clientRegId)) {
+                                googleLoginSuccessHandler.onAuthenticationSuccess(request, response, authentication);
+                            }
+                        })
                 );
+
 
         return http.build();
     }
