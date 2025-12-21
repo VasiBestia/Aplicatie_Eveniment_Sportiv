@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Echipele Mele - Poli Olympics</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+    <link th:href="@{/css/my_team_style.css}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+<div id="wrapper">
+
+    <div th:replace="fragments :: sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:replace="fragments :: topbar"></div>
+
+            <div class="container-fluid px-4">
+
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800 font-weight-bold">Echipele Mele</h1>
+                    <a th:href="@{/creare-echipa}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm rounded-pill px-3">
+                        <i class="fas fa-plus fa-sm text-white-50 mr-1"></i> Echipă Nouă
+                    </a>
+                </div>
+
+                <div th:if="${error}" class="alert alert-danger shadow-sm border-0 rounded-pill text-center mb-4"><span th:text="${error}"></span></div>
+                <div th:if="${success}" class="alert alert-success shadow-sm border-0 rounded-pill text-center mb-4"><span th:text="${success}"></span></div>
+
+                <div th:if="${hasAnyTeam}">
+
+                    <div th:if="${!teamsAsCaptain.isEmpty()}">
+                        <h4 class="text-warning font-weight-bold mb-3"><i class="fas fa-crown mr-2"></i> Căpitan</h4>
+
+                        <div th:each="team : ${teamsAsCaptain}" class="row mb-5">
+
+                            <div class="col-xl-6 col-md-12 mb-3">
+                                <div class="team-info-card">
+                                    <div class="small text-primary font-weight-bold text-uppercase mb-1">Echipa Ta</div>
+                                    <h2 class="font-weight-bold text-gray-800 mb-2" th:text="${team.numeEchipa}">Nume Echipă</h2>
+                                    <span class="sport-badge" th:text="${team.sport.numeSport}">Baschet</span>
+
+                                    <hr class="my-4">
+
+                                    <p class="small font-weight-bold mb-2 text-gray-600">Lotul Echipei (<span th:text="${team.membri.size()}"></span>)</p>
+                                    <div class="d-flex align-items-center">
+                                        <div th:each="membru : ${team.membri}" class="mr-n2 position-relative" data-toggle="tooltip" th:title="${membru.nume}">
+                                            <img class="member-avatar" th:src="@{/img/undraw_profile.svg}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6 col-md-12 mb-3">
+                                <div class="invitation-card">
+                                    <div class="invitation-title">Cod de Invitare</div>
+
+                                    <div class="code-dashed-box" onclick="copyCode(this)" title="Click pentru copiere">
+                                        <i class="far fa-copy"></i>
+                                        <span th:text="${team.codInscriere}">X92A-BC</span>
+                                    </div>
+
+                                    <div class="text-muted small mt-3">Trimite acest cod colegilor tăi pentru a-i înscrie.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div th:if="${!teamsAsMember.isEmpty()}">
+                        <h4 class="text-info font-weight-bold mb-3"><i class="fas fa-tshirt mr-2"></i> Jucător</h4>
+                        <div class="row">
+                            <div th:each="team : ${teamsAsMember}" class="col-xl-4 col-md-6 mb-4">
+                                <div class="team-info-card" style="border-left-color: #36b9cc;">
+                                    <h4 class="font-weight-bold text-gray-800" th:text="${team.numeEchipa}">Echipa</h4>
+                                    <div class="small text-muted">Căpitan: <span th:text="${team.capitan.nume}">Nume</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card shadow-sm border-0 mb-5">
+                    <div class="card-body p-4 d-flex align-items-center justify-content-between flex-wrap">
+                        <div>
+                            <h5 class="font-weight-bold text-primary mb-1">Alătură-te altei echipe</h5>
+                        </div>
+                        <form method="POST" th:action="@{/join-team}" class="d-flex align-items-center mt-3 mt-md-0">
+                            <input type="text" name="codInscriere" class="form-control custom-input mr-2" placeholder="Cod Echipă..." required>
+                            <button type="submit" class="btn btn-primary rounded-pill px-4">Trimite</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div> </div> <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto"><span>Copyright &copy; Poli Olympics 2025</span></div>
+        </div>
+    </footer>
+
+    </div> </div> <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gata de plecare?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">Selectează "Logout" pentru a încheia sesiunea.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Renunță</button>
+                <a class="btn btn-primary" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyCode(element) {
+        const codeText = element.innerText;
+        navigator.clipboard.writeText(codeText);
+        // Efect vizual rapid
+        element.style.backgroundColor = "#e8eaf1";
+        element.style.borderColor = "#2c3e50";
+        setTimeout(() => {
+            element.style.backgroundColor = "#f8f9fc";
+            element.style.borderColor = "#4e73df";
+        }, 300);
+    }
+</script>
+
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+</body>
+</html>

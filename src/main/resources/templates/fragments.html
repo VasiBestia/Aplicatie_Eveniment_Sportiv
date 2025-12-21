@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+
+<ul th:fragment="sidebar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center py-4" th:href="@{/index}">
+        <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-trophy fa-2x text-warning"></i></div>
+        <div class="sidebar-brand-text mx-3">Poli Olympics</div>
+    </a>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item active"><a class="nav-link" th:href="@{/index}"><i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard Aplicatie</span></a></li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">Competiție</div>
+    <li class="nav-item"><a class="nav-link" th:href="@{/creare-echipa}"><i class="fas fa-fw fa-user-plus"></i><span>Creare Echipe</span></a></li>
+    <li class="nav-item"><a class="nav-link" th:href="@{/my-team}"><i class="fas fa-fw fa-clipboard-list"></i><span>Echipele Mele</span></a></li>
+    <li class="nav-item"><a class="nav-link" th:href="@{/meciuri}"><i class="fas fa-fw fa-futbol"></i><span>Meciuri Live</span></a></li>
+</ul>
+
+<nav th:fragment="topbar" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow-sm">
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button>
+    <ul class="navbar-nav ml-auto">
+
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown">
+                <i class="fas fa-bell fa-fw"></i>
+                <span class="badge badge-danger badge-counter" th:if="${nrNotificari > 0}" th:text="${nrNotificari}"></span>
+            </a>
+            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">Centrul de Notificări</h6>
+                <div th:if="${nrNotificari == 0}" class="dropdown-item d-flex align-items-center justify-content-center py-3">
+                    <div class="small text-gray-500 font-weight-bold">Totul este la zi!</div>
+                </div>
+                <a th:each="notif : ${listaNotificari}" class="dropdown-item d-flex align-items-center" href="#">
+                    <div class="mr-3">
+                        <div class="icon-circle" th:classappend="${notif.contains('MECI') ? 'bg-warning' : 'bg-primary'}">
+                            <i class="fas text-white" th:classappend="${notif.contains('MECI') ? 'fa-futbol' : 'fa-info-circle'}"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500" th:text="${#temporals.format(T(java.time.LocalDateTime).now(), 'dd MMM yyyy')}">Data</div>
+                        <span class="font-weight-bold" th:text="${notif}">Text</span>
+                    </div>
+                </a>
+            </div>
+        </li>
+
+        <div class="topbar-divider d-none d-sm-block"></div>
+
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.username}">User</span>
+                <img class="img-profile rounded-circle" th:src="${session.profile_pic != null and session.profile_pic.startsWith('http') ? session.profile_pic : (session.profile_pic != null ? '/images/' + session.profile_pic : '/img/undraw_profile.svg')}" style="width: 40px; height: 40px; object-fit: cover;">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in">
+                <a class="dropdown-item" th:href="@{/profile}">Profil</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Admin - Editare Scor</title>
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-primary">
+
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Admin Panel: Actualizare Meci</h1>
+                            <p class="mb-4">Modifică scorul și statusul în timp real.</p>
+                        </div>
+
+                        <form class="user" th:action="@{/admin/update-meci}" method="POST">
+                            <input type="hidden" name="idMeci" th:value="${meci.idMeci}">
+
+                            <div class="form-group row text-center">
+                                <div class="col-6">
+                                    <h5 class="font-weight-bold text-primary" th:text="${meci.echipaAcasa.numeEchipa}">Gazde</h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 class="font-weight-bold text-danger" th:text="${meci.echipaDeplasare.numeEchipa}">Oaspeți</h5>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label class="small font-weight-bold">Scor Acasă</label>
+                                    <input type="number" class="form-control form-control-user text-center font-weight-bold"
+                                           name="scorAcasa" th:value="${meci.scorAcasa != null ? meci.scorAcasa : 0}" style="font-size: 1.5rem;">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="small font-weight-bold">Scor Deplasare</label>
+                                    <input type="number" class="form-control form-control-user text-center font-weight-bold"
+                                           name="scorDeplasare" th:value="${meci.scorDeplasare != null ? meci.scorDeplasare : 0}" style="font-size: 1.5rem;">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="small font-weight-bold">Status Meci</label>
+                                <select class="form-control" name="status" style="border-radius: 50px; height: 50px;">
+                                    <option value="PROGRAMAT" th:selected="${meci.status == 'PROGRAMAT'}">📅 PROGRAMAT</option>
+                                    <option value="LIVE" th:selected="${meci.status == 'LIVE'}">🔴 LIVE (Se joacă acum)</option>
+                                    <option value="TERMINAT" th:selected="${meci.status == 'TERMINAT'}">🏁 TERMINAT</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="font-weight-bold text-danger">Eliminare Echipe (Knockout)</label>
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="elimHome" name="eliminaGazdele">
+                                            <label class="custom-control-label text-danger" for="elimHome">Elimină <span th:text="${meci.echipaAcasa.numeEchipa}"></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="elimAway" name="eliminaOaspetii">
+                                            <label class="custom-control-label text-danger" for="elimAway">Elimină <span th:text="${meci.echipaDeplasare.numeEchipa}"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <small class="text-muted text-center d-block mt-2">Atenție: O echipă eliminată nu mai poate fi programată la meciuri noi!</small>
+                            </div>
+
+                            <hr>
+
+                            <button type="submit" class="btn btn-success btn-user btn-block font-weight-bold">
+                                <i class="fas fa-save mr-2"></i> Actualizează Scorul
+                            </button>
+
+                            <a th:href="@{/meciuri}" class="btn btn-secondary btn-user btn-block">
+                                Anulează
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

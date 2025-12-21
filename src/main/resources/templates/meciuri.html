@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Match Center - Poli Olympics</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+    <link th:href="@{/css/meciuri_style.css}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+<div id="wrapper">
+
+    <div th:replace="fragments :: sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:replace="fragments :: topbar"></div>
+
+
+            <div class="match-header text-center">
+                <h1 class="display-5 font-weight-bold mb-2"><i class="fas fa-trophy text-warning mr-2"></i> Match Center</h1>
+                <a th:if="${session.username == 'admin' or session.username == 'Alexandru Vasilescu'}"
+                   th:href="@{/admin/adauga-meci}"
+                   class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
+                    <i class="fas fa-plus fa-sm text-white-50"></i> Adaugă Meci Nou
+                </a>
+
+                <p class="mb-4 text-white-50 lead">Rezultate live, programări și statistici în timp real</p>
+
+                <div class="d-flex justify-content-center flex-wrap">
+                    <a th:href="@{/meciuri}" class="filter-btn text-decoration-none" th:classappend="${activeSport == 'Toate'} ? 'active'">Toate</a>
+                    <a th:href="@{/meciuri(sport='Fotbal')}" class="filter-btn text-decoration-none" th:classappend="${activeSport == 'Fotbal'} ? 'active'"><i class="fas fa-futbol mr-1"></i> Fotbal</a>
+                    <a th:href="@{/meciuri(sport='Baschet')}" class="filter-btn text-decoration-none" th:classappend="${activeSport == 'Baschet'} ? 'active'"><i class="fas fa-basketball-ball mr-1"></i> Baschet</a>
+                    <a th:href="@{/meciuri(sport='Tenis')}" class="filter-btn text-decoration-none" th:classappend="${activeSport == 'Tenis'} ? 'active'"><i class="fas fa-table-tennis mr-1"></i> Tenis</a>
+
+                </div>
+            </div>
+
+            <div class="container pb-5" style="max-width: 900px;">
+
+                <div th:each="meci : ${meciuri}">
+
+                    <div class="text-secondary small font-weight-bold mb-3 mt-4 text-uppercase d-flex align-items-center">
+                        <i class="far fa-calendar-alt mr-2"></i>
+                        <span th:text="${meci.getDataFormatata()}">12 DEC</span>
+                        <span class="mx-2">•</span>
+                        <span th:text="${meci.sport.numeSport}" class="text-primary">FOTBAL</span>
+                    </div>
+
+                    <div class="match-card" th:classappend="'status-' + ${meci.status}">
+
+                        <div class="match-row">
+                            <div class="team-container team-home">
+                                <span th:text="${meci.echipaAcasa.numeEchipa}">FC Automatica</span>
+                                <div class="team-logo ml-3"><i class="fas fa-shield-alt"></i></div>
+                            </div>
+
+                            <div class="score-board mx-3">
+                                <div th:if="${meci.status == 'PROGRAMAT'}">
+                                    <span class="match-time" th:text="${meci.getOraFormatata()}">20:00</span>
+                                </div>
+                                <div th:unless="${meci.status == 'PROGRAMAT'}">
+                                    <span class="score-display">
+                                        <span th:text="${meci.scorAcasa}">2</span> - <span th:text="${meci.scorDeplasare}">1</span>
+                                    </span>
+                                </div>
+
+                                <div th:if="${meci.status == 'LIVE'}" class="live-indicator">LIVE</div>
+
+                                <div class="match-info text-muted small mt-1 font-weight-bold">
+                                    <span th:if="${meci.status == 'TERMINAT'}">FT</span>
+                                    <span th:if="${meci.status == 'LIVE'}">Min 65'</span>
+                                </div>
+                            </div>
+
+                            <div class="team-container team-away">
+                                <div class="team-logo mr-3"><i class="fas fa-shield-alt"></i></div>
+                                <span th:text="${meci.echipaDeplasare.numeEchipa}">Dinamo ETTI</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-light px-4 py-3 small text-muted d-flex justify-content-between align-items-center border-top">
+                            <span><i class="fas fa-map-marker-alt text-danger mr-2"></i> <span th:text="${meci.locatie.numeLocatie}">Teren R1</span></span>
+
+                            <a th:href="@{'/meci/' + ${meci.idMeci}}" class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm">
+                                Vezi Detalii <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+
+                            <a th:if="${session.username == 'admin' or session.username == 'Alexandru Vasilescu'}"
+                               th:href="@{'/admin/edit-meci/' + ${meci.idMeci}}"
+                               class="btn btn-warning rounded-pill px-4 ml-2 shadow-sm">
+                                <i class="fas fa-edit mr-2"></i> Admin Edit
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div th:if="${meciuri.isEmpty()}" class="text-center py-5">
+                    <div class="mb-3 text-gray-300"><i class="fas fa-calendar-times fa-4x"></i></div>
+                    <h5 class="text-gray-600 font-weight-bold">Niciun meci găsit</h5>
+                    <p class="text-muted">Nu există meciuri programate momentan pentru selecția ta.</p>
+                </div>
+
+            </div> </div> <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto"><span>Copyright &copy; Poli Olympics 2025</span></div>
+        </div>
+    </footer>
+
+    </div> </div> <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gata de plecare?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">Selectează "Logout" pentru a încheia sesiunea.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Renunță</button>
+                <a class="btn btn-primary" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+</body>
+</html>

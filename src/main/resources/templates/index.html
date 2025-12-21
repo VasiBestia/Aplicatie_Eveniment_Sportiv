@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard - Poli Olympics</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+    <link th:href="@{/css/index_style.css}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+<div id="wrapper">
+
+    <div th:replace="fragments :: sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:replace="fragments :: topbar"></div>
+
+
+            <div class="container-fluid">
+
+                <div class="welcome-card">
+                    <div class="welcome-content">
+                        <h1 class="font-weight-bold mb-2">Salut, <span th:text="${session.username}">Andreea</span>! 👋</h1>
+                        <p class="lead mb-0 text-white-50">Bine ai revenit în arenă. Iată ce se întâmplă astăzi în Poli Olympics.</p>
+
+                        <a th:href="@{/meciuri}" class="btn btn-light text-primary font-weight-bold rounded-pill mt-4 shadow-sm">
+                            <i class="fas fa-play mr-2"></i> Vezi Meciurile de Azi
+                        </a>
+                    </div>
+                    <i class="fas fa-medal welcome-bg-icon"></i>
+                </div>
+
+
+                <div class="row mb-4">
+
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="stat-card border-primary" style="border-left-color: #4e73df;">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Echipele Tale</div>
+                                    <div class="h3 mb-0 font-weight-bold text-gray-800">2</div> </div>
+                                <div class="stat-icon bg-primary text-white">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="stat-card border-success" style="border-left-color: #1cc88a;">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Meciuri Următoare</div>
+                                    <div class="h3 mb-0 font-weight-bold text-gray-800">1</div> </div>
+                                <div class="stat-icon bg-success text-white">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="stat-card border-warning" style="border-left-color: #f6c23e;">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Notificări</div>
+                                    <div class="h3 mb-0 font-weight-bold text-gray-800">3</div>
+                                </div>
+                                <div class="stat-icon bg-warning text-white">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-lg-8 mb-4">
+                        <div class="next-match-card">
+                            <div class="next-match-header">
+                                <span><i class="fas fa-clock mr-2"></i> URMĂTORUL TĂU MECI</span>
+                                <span class="badge bg-warning text-dark">PROGRAMAT</span>
+                            </div>
+                            <div class="next-match-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <i class="fas fa-shield-alt fa-3x text-gray-300 mb-2"></i>
+                                        <h4 class="font-weight-bold text-gray-800">FC Poli</h4>
+                                    </div>
+                                    <div class="col-md-4 my-3">
+                                        <div class="h2 font-weight-bold text-primary">VS</div>
+                                        <div class="text-xs font-weight-bold text-uppercase text-muted">Mâine, 20:00</div>
+                                        <div class="small text-danger mt-1"><i class="fas fa-map-marker-alt"></i> Teren R1</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <i class="fas fa-shield-alt fa-3x text-gray-300 mb-2"></i>
+                                        <h4 class="font-weight-bold text-gray-800">Dinamo ETTI</h4>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <a th:href="@{/meciuri}" class="btn btn-outline-primary rounded-pill btn-sm px-4">Vezi Detalii</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mb-4">
+                        <div class="card shadow mb-4" style="border-radius: 20px; overflow: hidden; border: none;">
+                            <div class="card-header py-3 bg-white d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Acces Rapid</h6>
+                            </div>
+                            <div class="card-body bg-light">
+
+                                <a th:href="@{/creare-echipa}" class="quick-action-btn">
+                                    <div class="mr-3 p-2 bg-white rounded-circle text-primary shadow-sm"><i class="fas fa-plus"></i></div>
+                                    <div>
+                                        <div class="font-weight-bold">Creează o Echipă Nouă</div>
+                                        <div class="small text-muted">Devino căpitan azi</div>
+                                    </div>
+                                </a>
+
+                                <a th:href="@{/join-team}" class="quick-action-btn">
+                                    <div class="mr-3 p-2 bg-white rounded-circle text-success shadow-sm"><i class="fas fa-sign-in-alt"></i></div>
+                                    <div>
+                                        <div class="font-weight-bold">Alătură-te unei Echipe</div>
+                                        <div class="small text-muted">Folosește un cod de invitație</div>
+                                    </div>
+                                </a>
+
+                                <a th:href="@{/profile}" class="quick-action-btn mb-0">
+                                    <div class="mr-3 p-2 bg-white rounded-circle text-info shadow-sm"><i class="fas fa-user-edit"></i></div>
+                                    <div>
+                                        <div class="font-weight-bold">Editează Profilul</div>
+                                        <div class="small text-muted">Actualizează poza sau datele</div>
+                                    </div>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div> </div> <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto"><span>Copyright &copy; Poli Olympics 2025</span></div>
+        </div>
+    </footer>
+
+    </div> </div> <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gata de plecare?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">Selectează "Logout" pentru a încheia sesiunea.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Renunță</button>
+                <a class="btn btn-primary" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+</body>
+</html>

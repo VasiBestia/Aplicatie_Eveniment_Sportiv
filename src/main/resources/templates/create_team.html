@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team Builder - Poli Olympics</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+    <link th:href="@{/css/create_team_style.css}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+<div id="wrapper">
+
+    <div th:replace="fragments :: sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:replace="fragments :: topbar"></div>
+
+            <div class="hero-section text-center">
+                <h1 class="display-5 font-weight-bold">Începe Călătoria Spre Aur</h1>
+                <p class="lead mb-0 text-white-50">Înscrie-ți echipa, alege-ți culorile și domină clasamentul facultăților.</p>
+            </div>
+
+            <div class="container-fluid px-4" style="margin-top: -3rem;"> <div th:if="${error}" class="alert alert-danger shadow-sm border-0 rounded-pill text-center mb-4" role="alert">
+                <i class="fas fa-exclamation-circle mr-2"></i> <span th:text="${error}"></span>
+            </div>
+                <div th:if="${success}" class="alert alert-success shadow-sm border-0 rounded-pill text-center mb-4" role="alert">
+                    <i class="fas fa-check-circle mr-2"></i> <span th:text="${success}"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 mb-4">
+                        <div class="custom-card">
+                            <div class="card-header-custom d-flex justify-content-between align-items-center">
+                                <h5 class="m-0 font-weight-bold text-primary">Detalii Echipă</h5>
+                                <span class="badge bg-primary text-white rounded-pill px-3 py-2">Pasul 1/2</span>
+                            </div>
+                            <div class="card-body-custom">
+                                <form method="POST" th:action="@{/creare-echipa}">
+
+                                    <div class="mb-4">
+                                        <label for="numeEchipa" class="form-label">Numele Echipei</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-flag"></i></span>
+                                            <input type="text" class="form-control custom-input" id="numeEchipa" name="numeEchipa"
+                                                   placeholder="Ex: FC Politehnica, Tigrii ETTI..." required>
+                                        </div>
+                                        <small class="text-muted ms-2"><i class="fas fa-info-circle"></i> Alege un nume unic și impunător.</small>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="sportId" class="form-label">Disciplina Sportivă</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-basketball-ball"></i></span>
+                                            <select class="form-control custom-input" id="sportId" name="sportId" required>
+                                                <option value="" disabled selected>-- Selectează Sportul --</option>
+                                                <option th:each="sport : ${sporturi}"
+                                                        th:value="${sport.idSport}"
+                                                        th:text="${sport.numeSport} + ' (Lot: ' + ${sport.teamSize} + ' jucători)'">
+                                                    Fotbal (11)
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4">
+
+                                    <div class="d-flex gap-3">
+                                        <button type="submit" class="btn btn-create">
+                                            <i class="fas fa-plus-circle mr-2"></i> Oficializează Echipa
+                                        </button>
+                                    </div>
+
+                                    <div class="text-center mt-3">
+                                        <a th:href="@{/index}" class="text-secondary small text-decoration-none">Anulează și înapoi la Dashboard</a>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 mb-4">
+                        <div class="tactics-board">
+                            <div class="tactics-overlay"></div>
+
+                            <h4 class="font-weight-bold mb-4 position-relative" style="z-index: 2;">
+                                <i class="fas fa-clipboard-list mr-2 text-warning"></i> Briefing Căpitan
+                            </h4>
+
+                            <div class="rule-item">
+                                <div class="rule-icon"><i class="fas fa-crown text-white"></i></div>
+                                <div>
+                                    <h6 class="font-weight-bold text-warning">Liderul Jocului</h6>
+                                    <p class="small text-white-50 mb-0">Ești automat desemnat Căpitan și primul jucător al echipei.</p>
+                                </div>
+                            </div>
+
+                            <div class="rule-item">
+                                <div class="rule-icon"><i class="fas fa-signature text-white"></i></div>
+                                <div>
+                                    <h6 class="font-weight-bold text-warning">Brandul Echipei</h6>
+                                    <p class="small text-white-50 mb-0">Numele nu poate fi schimbat ulterior. Asigură-te că nu este ofensator.</p>
+                                </div>
+                            </div>
+
+                            <div class="rule-item">
+                                <div class="rule-icon"><i class="fas fa-users text-white"></i></div>
+                                <div>
+                                    <h6 class="font-weight-bold text-warning">Gestionarea Lotului</h6>
+                                    <p class="small text-white-50 mb-0">După creare, vei primi un cod unic pentru a-ți invita colegii în echipă.</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-5 text-center position-relative" style="z-index: 2;">
+                                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">
+                                    <i class="fas fa-star mr-1"></i> Fair Play First
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="sticky-footer bg-white mt-auto">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>&copy; Poli Olympics 2025 • Designed for Champions</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gata de plecare?</h5>
+                <button class="close" type="button" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">Selectează "Logout" pentru a încheia sesiunea.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Renunță</button>
+                <a class="btn btn-primary" th:href="@{/login}">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{js/sb-admin-2.min.js}"></script>
+</body>
+</html>

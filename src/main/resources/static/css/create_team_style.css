@@ -1,0 +1,161 @@
+body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        /* Sidebar Modernizat */
+        .bg-gradient-primary {
+            background-image: linear-gradient(180deg, #2c3e50 10%, #4e73df 100%);
+        }
+
+        /* Hero Banner (Zona de sus) */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1526676037777-05a232554f77?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 0 30px 30px;
+            color: white;
+            padding: 3rem 2rem;
+            margin-bottom: -3rem; /* Suprapunere cu cardurile */
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Cardurile Principale */
+        .custom-card {
+            border: none;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            position: relative;
+            z-index: 10; /* Să stea peste Hero */
+            height: 100%;
+        }
+
+        .card-header-custom {
+            background: white;
+            padding: 1.5rem;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .card-body-custom {
+            padding: 2rem;
+        }
+
+        /* Input-uri Stilizate */
+        .form-label {
+            font-weight: 600;
+            color: #4e73df;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group-text {
+            background: #f8faff;
+            border: 2px solid #eef1f6;
+            border-right: none;
+            border-radius: 15px 0 0 15px;
+            color: #4e73df;
+        }
+
+        .custom-input {
+            border: 2px solid #eef1f6;
+            border-left: none;
+            border-radius: 0 15px 15px 0;
+            padding: 0.8rem;
+            background-color: #f8faff;
+            transition: all 0.3s;
+        }
+
+        .custom-input:focus {
+            border-color: #4e73df;
+            background-color: #fff;
+            box-shadow: none;
+        }
+
+        /* Selectul e special */
+        .custom-select {
+            border-radius: 15px !important;
+            border: 2px solid #eef1f6;
+            padding: 0.8rem;
+            background-color: #f8faff;
+        }
+
+        /* Butonul de Submit */
+        .btn-create {
+            background: linear-gradient(90deg, #1cc88a, #13855c);
+            border: none;
+            border-radius: 50px;
+            padding: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            width: 100%;
+            color: white;
+            box-shadow: 0 4px 15px rgba(28, 200, 138, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .btn-create:hover {
+            transform: translateY(-3px);
+            color: white;
+            box-shadow: 0 6px 20px rgba(28, 200, 138, 0.6);
+        }
+
+        /* Panoul Tactic (Dreapta) */
+        .tactics-board {
+            background: #2c3e50;
+            color: white;
+            height: 100%;
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tactics-overlay {
+            /* Linii de teren desenate subtil */
+            background-image:
+                linear-gradient(rgba(255,255,255,0.1) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-size: 50px 50px;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            opacity: 0.3;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: start;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .rule-icon {
+            background: #e74a3b;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .input-group select.custom-input {
+    height: 3.2rem; /* Asigură înălțimea minimă necesară pentru a nu tăia textul */
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    padding-right: 2rem; /* Adaugă spațiu pentru săgeata drop-down implicită */
+    appearance: none; /* Ascunde săgeata implicită a browserului dacă nu este necesară */
+}
+
+/* Dacă vrei ca și iconița să fie mai bine aliniată: */
+.input-group-text {
+    align-items: center;
+    padding: 0.8rem;
+}

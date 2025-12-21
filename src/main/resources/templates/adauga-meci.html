@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Admin - Adaugă Meci</title>
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-primary">
+
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <div class="p-5">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Adaugă un Meci Nou</h1>
+                </div>
+
+                <form class="user" th:action="@{/admin/salveaza-meci}" th:object="${meci}" method="POST">
+
+                    <div class="form-group">
+                        <label class="font-weight-bold small">Sport</label>
+                        <select class="form-control" th:field="*{sport}" id="sportSelect" onchange="filterTeams()" style="border-radius: 50px; height: 50px;">
+                            <option value="" disabled selected>Alege Sportul...</option>
+                            <option th:each="s : ${listaSporturi}" th:value="${s.idSport}" th:text="${s.numeSport}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label class="font-weight-bold small text-primary">Echipa Gazdă</label>
+                            <select class="form-control" th:field="*{echipaAcasa}" id="homeTeam" style="border-radius: 50px; height: 50px;">
+                                <option value="">-- Selectează --</option>
+                                <option th:each="team : ${listaEchipe}"
+                                        th:value="${team.idEchipa}"
+                                        th:text="${team.numeEchipa}"
+                                        th:data-sport="${team.sport.idSport}"
+                                        class="team-option"></option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="font-weight-bold small text-danger">Echipa Oaspete</label>
+                            <select class="form-control" th:field="*{echipaDeplasare}" id="awayTeam" style="border-radius: 50px; height: 50px;">
+                                <option value="">-- Selectează --</option>
+                                <option th:each="team : ${listaEchipe}"
+                                        th:value="${team.idEchipa}"
+                                        th:text="${team.numeEchipa}"
+                                        th:data-sport="${team.sport.idSport}"
+                                        class="team-option"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="font-weight-bold small">Data și Ora</label>
+                            <input type="datetime-local" class="form-control" th:field="*{dataOra}" required style="border-radius: 50px; height: 50px;">
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="font-weight-bold small">Locație</label>
+                            <select class="form-control" th:field="*{locatie}" style="border-radius: 50px; height: 50px;">
+                                <option th:each="loc : ${listaLocatii}" th:value="${loc.idLocatie}" th:text="${loc.numeLocatie}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold">
+                        <i class="fas fa-plus-circle mr-2"></i> Programează Meciul
+                    </button>
+                    <a th:href="@{/meciuri}" class="btn btn-secondary btn-user btn-block">Renunță</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    function filterTeams() {
+        const selectedSportId = document.getElementById('sportSelect').value;
+        const teamOptions = document.querySelectorAll('.team-option');
+        const homeSelect = document.getElementById('homeTeam');
+        const awaySelect = document.getElementById('awayTeam');
+
+        // Resetăm selecția curentă
+        homeSelect.value = "";
+        awaySelect.value = "";
+
+        teamOptions.forEach(option => {
+            const teamSportId = option.getAttribute('data-sport');
+
+            if (teamSportId === selectedSportId) {
+                option.style.display = "block"; // Arătăm echipa dacă sportul coincide
+            } else {
+                option.style.display = "none";  // Ascundem dacă e alt sport
+            }
+        });
+    }
+</script>
+
+
+</body>
+</html>

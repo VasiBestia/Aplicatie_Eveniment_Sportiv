@@ -1,0 +1,92 @@
+body { font-family: 'Poppins', sans-serif; background-color: #f0f2f5; }
+
+        /* --- 1. SIDEBAR-UL TĂU (Gradientul Închis) --- */
+        .bg-gradient-primary {
+            background-image: linear-gradient(180deg, #2c3e50 10%, #4e73df 100%) !important;
+            background-size: cover;
+        }
+
+        /* --- 2. CARDUL DE ECHIPĂ (Stânga) --- */
+        .team-info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: 100%;
+            border-left: 5px solid #4e73df; /* Linie albastră stânga */
+            position: relative;
+        }
+
+        /* --- 3. ELEMENTUL "COD INVITARE" (Dreapta - FIX CA ÎN POZĂ) --- */
+        .invitation-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: 100%;
+            border-left: 5px solid #ffc107; /* Linie galbenă stânga */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .invitation-title {
+            color: #ffc107;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Chenarul Albastru Punctat din interior */
+        .code-dashed-box {
+            border: 2px dashed #4e73df; /* Albastru punctat */
+            background-color: #f8f9fc;
+            border-radius: 10px;
+            padding: 1.5rem;
+            color: #4e73df;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .code-dashed-box:hover {
+            background-color: #e8eaf1;
+            transform: scale(1.02);
+        }
+
+        /* Badge Sport */
+        .sport-badge {
+            background-color: #36b9cc; /* Cyan */
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        /* Membri */
+        .member-avatar {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+            object-fit: cover;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Join Input */
+        .custom-input {
+            border-radius: 50px;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid #d1d3e2;
+        }
