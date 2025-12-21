@@ -88,5 +88,5 @@ This project was developed as part of a bachelor's thesis, aiming to digitize th
 
 ## 📄 License
 
-All rights reserved © 2024 **[Your Name Here]**.
+All rights reserved © 2024 Vasilescu Alexandru Gabriel.
 The source code is available for viewing for educational purposes.
