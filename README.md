@@ -1,66 +1,92 @@
-# [Start Bootstrap - SB Admin 2](https://startbootstrap.com/theme/sb-admin-2/)
+# 🏆 Sports Event Management Application
 
-[SB Admin 2](https://startbootstrap.com/theme/sb-admin-2/) is an open source admin dashboard theme for [Bootstrap](https://getbootstrap.com/) created by [Start Bootstrap](https://startbootstrap.com/).
+A complex web platform dedicated to organizing and managing sports tournaments, developed using **Java Spring Boot** and **Thymeleaf**. The application allows for complete administration of matches, teams, and live scores, featuring a secure authentication system via social networks.
 
-For the legacy Bootstrap 3 version of this theme, you can view the [last stable release](https://github.com/StartBootstrap/startbootstrap-sb-admin-2/releases/tag/v3.3.7%2B1) of SB Admin 2 for Bootstrap 3.
+---
 
-## Preview
+## 📸 Visual Overview
 
-[![SB Admin 2 Preview](https://assets.startbootstrap.com/img/screenshots/themes/sb-admin-2.png)](https://startbootstrap.github.io/startbootstrap-sb-admin-2/)
+### 1. Authentication System (OAuth2)
+Users can quickly log in using **Google** or **Facebook** accounts, or via the standard method (username/password). The buttons are custom-styled to integrate seamlessly with the application theme.
+![Login Page](img/loginscreenshot.png)
 
-**[Launch Live Preview](https://startbootstrap.github.io/startbootstrap-sb-admin-2/)**
+### 2. Administrator Dashboard
+The main panel offers an overview of the competition, allowing quick scheduling of new matches and visualization of team statuses.
+![Admin Dashboard](img/dashboardscreenshot.png)
 
-## Status
+### 3. Match Management & Team Elimination
+Key functionality: The Admin can edit scores and, with a single click, **eliminate the losing team**. Eliminated teams are automatically excluded from selection lists for future matches to prevent errors.
+![Match Editing and Elimination](img/paginademeciuriss.png)
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/StartBootstrap/startbootstrap-sb-admin-2/master/LICENSE)
-[![npm version](https://img.shields.io/npm/v/startbootstrap-sb-admin-2.svg)](https://www.npmjs.com/package/startbootstrap-sb-admin-2)
-[![Build Status](https://travis-ci.org/StartBootstrap/startbootstrap-sb-admin-2.svg?branch=master)](https://travis-ci.org/StartBootstrap/startbootstrap-sb-admin-2)
-[![dependencies Status](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2/status.svg)](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2)
-[![devDependencies Status](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2/dev-status.svg)](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2?type=dev)
+---
 
-## Download and Installation
+## 🚀 Key Features
 
-To begin using this template, choose one of the following options to get started:
+### 🔐 Security & Access
+* **Social Login:** Full integration with **Google OAuth2** and **Facebook Login** APIs.
+* **Data Security:** Standard user passwords are encrypted using **BCrypt**.
+* **Role-Based Access:** Differentiated access for Administrators (edit/delete rights) and Standard Users (view-only rights).
 
-* [Download the latest release on Start Bootstrap](https://startbootstrap.com/theme/sb-admin-2/)
-* Install via npm: `npm i startbootstrap-sb-admin-2`
-* Clone the repo: `git clone https://github.com/StartBootstrap/startbootstrap-sb-admin-2.git`
-* [Fork, Clone, or Download on GitHub](https://github.com/StartBootstrap/startbootstrap-sb-admin-2)
+### ⚙️ Business Logic (Knockout Tournament)
+* **Elimination System:** Implemented specific backend logic that marks teams as `is_eliminated` in the SQL Server database.
+* **Smart Validation:** When scheduling a new match, the interface loads **only** active teams, preventing human error in scheduling already eliminated teams.
+* **Live Updates:** Score updates are instantly reflected in the rankings/standings.
 
-## Usage
+### 💻 User Interface (UI/UX)
+* **Responsive Design:** Based on **Bootstrap 4** (Customized SB Admin 2 Theme).
+* **Dynamic Rendering:** Pages are rendered dynamically using **Thymeleaf**.
+* **Fluid Navigation:** Seamless experience navigating between matches, teams, and user profiles.
 
-After installation, run `npm install` and then run `npm start` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
+---
 
-### Gulp Tasks
+## 🛠️ Technology Stack
 
-* `gulp` the default task that builds everything
-* `gulp watch` browserSync opens the project in your default browser and live reloads when changes are made
-* `gulp css` compiles SCSS files into CSS and minifies the compiled CSS
-* `gulp js` minifies the themes JS file
-* `gulp vendor` copies dependencies from node_modules to the vendor directory
+| Category | Technologies |
+| :--- | :--- |
+| **Backend** | Java 17, Spring Boot 3.x, Spring Security |
+| **Database** | Microsoft SQL Server (JDBC, JPA/Hibernate) |
+| **Frontend** | Thymeleaf, HTML5, CSS3, JavaScript, Bootstrap 4 |
+| **Build Tool** | Maven |
+| **External APIs** | Google Identity Platform, Meta for Developers (Facebook Login) |
 
-You must have npm installed globally in order to use this build environment. This theme was built using node v11.6.0 and the Gulp CLI v2.0.1. If Gulp is not running properly after running `npm install`, you may need to update node and/or the Gulp CLI locally.
+---
 
-## Bugs and Issues
+## 💻 Installation and Local Setup
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/StartBootstrap/startbootstrap-sb-admin-2/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](https://startbootstrap.com/theme/sb-admin-2/).
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/your-username/Project-Name.git](https://github.com/your-username/Project-Name.git)
+    ```
 
-## About
+2.  **Database Configuration:**
+    * Ensure you have SQL Server installed and running.
+    * Create a database named `Eveniment_Sportiv`.
+    * Configure `src/main/resources/application.properties` with your username and password.
 
-Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
+3.  **Environment Variables Configuration (.env):**
+    * For Facebook and Google login to work, create a `.env` file in the root directory or set the variables in your IDE:
+    ```properties
+    GOOGLE_CLIENT_ID=your_key_here
+    GOOGLE_CLIENT_SECRET=your_secret_here
+    FACEBOOK_CLIENT_ID=facebook_app_id
+    FACEBOOK_CLIENT_SECRET=facebook_app_secret
+    ```
 
-* <https://startbootstrap.com>
-* <https://twitter.com/SBootstrap>
+4.  **Running the Application:**
+    * Run the `EvenimentSportivApplication.java` class from IntelliJ/Eclipse.
+    * Access the app at: `http://localhost:8080`.
 
-Start Bootstrap was created by and is maintained by **[David Miller](https://davidmiller.io/)**.
+---
 
-* <https://davidmiller.io>
-* <https://twitter.com/davidmillerhere>
-* <https://github.com/davidtmiller>
+## 👤 Author
 
-Start Bootstrap is based on the [Bootstrap](https://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+Project realized and developed entirely by **[Your Name Here]**.
 
-## Copyright and License
+This project was developed as part of a bachelor's thesis, aiming to digitize the process of organizing sports competitions.
 
-Copyright 2013-2021 Start Bootstrap LLC. Code released under the [MIT](https://github.com/StartBootstrap/startbootstrap-resume/blob/master/LICENSE) license.
-# Aplicatie_Eveniment_Sportiv
+---
+
+## 📄 License
+
+All rights reserved © 2024 **[Your Name Here]**.
+The source code is available for viewing for educational purposes.
