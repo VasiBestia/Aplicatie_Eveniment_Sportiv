@@ -1,3 +1,8 @@
+/** Controller pentru gestionarea cererilor legate de meciuri sportive.
+ * @author Vasilescu Alexandru Gabriel
+ * @version 5 Ianuarie 2026
+ */
+
 package primary.Eveniment_Sportiv.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;

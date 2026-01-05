@@ -1,3 +1,8 @@
+/** Clasa pentru gestionarea logicii de autentificare OAuth2 a utilizatorilor prin Google și FaceBook.
+ * @author Vasilescu Alexandru Gabriel
+ * @version 5 Ianuarie 2026
+ */
+
 package primary.Eveniment_Sportiv.config;
 
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

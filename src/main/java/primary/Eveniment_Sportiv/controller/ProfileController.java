@@ -1,3 +1,8 @@
+/** Controller pentru gestionarea paginii de profil a utilizatorului.
+ * @author Vasilescu Alexandru Gabriel
+ * @version 5 Ianuarie 2026
+ */
+
 package primary.Eveniment_Sportiv.controller;
 
 import org.springframework.web.multipart.MultipartFile;

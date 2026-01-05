@@ -1,3 +1,8 @@
+/** Clasa pentru crearea Securitatii Aplicatiei.
+ * @author Vasilescu Alexandru Gabriel
+ * @version 5 Ianuarie 2026
+ */
+
 package primary.Eveniment_Sportiv.config;
 
 import org.springframework.beans.factory.annotation.Autowired;

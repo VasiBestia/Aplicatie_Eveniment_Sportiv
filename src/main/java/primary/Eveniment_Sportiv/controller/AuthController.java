@@ -1,3 +1,10 @@
+/** Controller pentru gestionarea autentificării utilizatorilor, inclusiv login, înregistrare,
+ * resetare parolă și deconectare.
+ * @author Vasilescu Alexandru Gabriel
+ * @version 5 Ianuarie 2026
+ */
+
+
 package primary.Eveniment_Sportiv.controller;
 
 import com.nimbusds.jose.proc.SecurityContext;

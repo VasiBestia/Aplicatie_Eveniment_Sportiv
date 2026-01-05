@@ -1,3 +1,9 @@
+/** Clasa pentru gestionarea logicii de autentificare OAuth2 a utilizatorilor prin Google
+ * @author Vasilescu Alexandru Gabriel
+ * @version 5 Ianuarie 2026
+ */
+
+
 package primary.Eveniment_Sportiv.config;
 
 import jakarta.servlet.ServletException;

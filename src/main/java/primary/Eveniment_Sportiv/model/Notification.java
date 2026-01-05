@@ -1,3 +1,8 @@
+/** Entitate De tip Tabela Pt Gestionarea Notificarilor despre Eveniment.
+ * @author Vasilescu Alexandru Gabriel
+ * @version 5 Ianuarie 2026
+ */
+
 package primary.Eveniment_Sportiv.model;
 
 import jakarta.persistence.*;

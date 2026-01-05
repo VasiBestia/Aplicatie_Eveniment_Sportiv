@@ -1,3 +1,9 @@
+/** Controller pentru administrarea meciurilor sportive, incluzând funcționalități de editare și adăugare meciuri.
+ * @author Vasilescu Alexandru Gabriel
+ * @version 5 Ianuarie 2026
+ */
+
+
 package primary.Eveniment_Sportiv.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;

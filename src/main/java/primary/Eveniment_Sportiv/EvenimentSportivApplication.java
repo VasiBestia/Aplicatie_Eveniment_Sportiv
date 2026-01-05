@@ -1,3 +1,9 @@
+/** Clasa Pt Rularea Eveniment Sportiv.
+ * @author Vasilescu Alexandru Gabriel
+ * @version 5 Ianuarie 2026
+ */
+
+
 package primary.Eveniment_Sportiv;
 
 import org.springframework.boot.SpringApplication;

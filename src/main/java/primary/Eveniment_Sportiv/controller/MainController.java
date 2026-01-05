@@ -1,3 +1,9 @@
+/**Controller pentru pagina principală a aplicației de evenimente sportive.
+ * @author Vasilescu Alexandru Gabriel
+ * @version 5 Ianuarie 2026
+ */
+
+
 package primary.Eveniment_Sportiv.controller;
 
 import org.springframework.ui.Model;
