@@ -34,22 +34,27 @@
                         <p class="text-muted small">Completează datele pentru a te înregistra.</p>
                     </div>
 
+                    <div th:if="${error}" class="alert alert-danger">
+                        <span th:text="${error}"></span>
+                    </div>
+                    <div th:if="${success}" class="alert alert-success">
+                        <span th:text="${success}"></span>
+                    </div>
+
                     <form class="user" th:action="@{/register}" method="POST">
 
                         <div class="form-group mb-3">
                             <input type="text"
                                    class="form-control custom-input"
                                    id="username" name="username"
-                                   placeholder="Nume de utilizator (Username)"
-                                   required>
+                                   placeholder="Nume de utilizator (Username)">
                         </div>
 
                         <div class="form-group mb-3">
-                            <input type="email"
+                            <input type="text"
                                    class="form-control custom-input"
                                    id="email" name="email"
-                                   placeholder="Adresa de Email Institutional (@stud)"
-                                   required>
+                                   placeholder="Adresa de Email Institutional (@stud)">
                         </div>
 
                         <div class="row mb-2">
@@ -57,21 +62,19 @@
                                 <input type="password"
                                        class="form-control custom-input"
                                        id="password" name="password"
-                                       placeholder="Parolă"
-                                       required>
+                                       placeholder="Parolă">
                             </div>
                             <div class="col-sm-6">
                                 <input type="password"
                                        class="form-control custom-input"
                                        id="retype_password" name="retype_password"
-                                       placeholder="Repetă Parola"
-                                       required>
+                                       placeholder="Repetă Parola">
                             </div>
                         </div>
 
                         <div class="password-requirements">
                             <i class="fas fa-info-circle me-1"></i>
-                            Parola trebuie să aibă minim 8 caractere și să conțină un mix de litere, cifre și caractere speciale.
+                            Parola trebuie să aibă minim 8 caractere...
                         </div>
 
                         <button type="submit" class="btn custom-btn-main w-100 mb-4">
@@ -96,7 +99,7 @@
                     <hr class="my-4">
 
                     <div class="text-center d-flex justify-content-center gap-4">
-                        <a class="custom-link" th:href="@{/forgot-password}">Ai uitat parola?</a>
+                        <a class="custom-link" th:href="@{/retype-password}">Ai uitat parola?</a>
                         <a class="custom-link fw-bold" th:href="@{/login}">Ai deja cont? Autentificare!</a>
                     </div>
                 </div>

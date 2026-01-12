@@ -20,6 +20,7 @@ import primary.Eveniment_Sportiv.model.UserAccount;
 import primary.Eveniment_Sportiv.repository.UserRepository;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,16 +40,30 @@ public class FacebookLoginSuccessHandler implements AuthenticationSuccessHandler
         // 1. Preluam datele de la Facebook
         OAuth2User facebookUser = (OAuth2User) authentication.getPrincipal();
 
-        // Facebook trimite de obicei: "email", "name", "id"
+        // Extragem ID-ul (folosit pentru poza)
+        String facebookId = facebookUser.getAttribute("id");
+
+        // Extragem Email si Nume
         String email = facebookUser.getAttribute("email");
         String name = facebookUser.getAttribute("name");
 
-        // Daca Facebook nu da email (se intampla rar, daca userul nu are), folosim ID-ul
-        if (email == null) {
-            email = facebookUser.getAttribute("id") + "@facebook.com";
+        String photoUrl = "/images/default-avatar.png";
+
+        Map<String, Object> picture = facebookUser.getAttribute("picture");
+        if (picture != null) {
+            Map<String, Object> data = (Map<String, Object>) picture.get("data");
+            if (data != null && data.get("url") != null) {
+                photoUrl = data.get("url").toString();
+            }
         }
 
-        System.out.println("LOG FACEBOOK: User logat: " + name + " | Email: " + email);
+        // Fallback pentru email (daca totusi e null, macar sa stim)
+        if (email == null) {
+            System.out.println("ATENTIE: Facebook nu a returnat email. Folosim ID-ul.");
+            email = facebookId + "@facebook.com";
+        }
+
+        System.out.println("LOG FACEBOOK: User: " + name + " | Email: " + email + " | Poza: " + photoUrl);
 
         // 2. Verificam in baza de date
         Optional<UserAccount> existingUser = userRepository.findByEmail(email);
@@ -56,19 +71,20 @@ public class FacebookLoginSuccessHandler implements AuthenticationSuccessHandler
 
         if (existingUser.isPresent()) {
             user = existingUser.get();
-            // Actualizam numele daca s-a schimbat pe Facebook
+            // Actualizam poza daca utilizatorul si-a schimbat-o pe Facebook
+            user.setImagePath(photoUrl);
+            // Actualizam numele daca e diferit
             if (name != null && !name.equals(user.getUsername())) {
                 user.setUsername(name);
-                userRepository.save(user);
             }
+            userRepository.save(user); // Salvam actualizarile
         } else {
             // 3. Cream utilizator nou
             user = new UserAccount();
             user.setEmail(email);
             user.setUsername(name);
-            user.setImagePath("/img/undraw_profile.svg"); // Sau poti extrage poza de la FB daca vrei
+            user.setImagePath(photoUrl); // <--- AICI SALVAM POZA REALA
 
-            // Generam o parola random (userul nu o va sti, se logheaza doar cu FB)
             String randomPassword = UUID.randomUUID().toString();
             user.setParola(passwordEncoder.encode(randomPassword));
 
@@ -78,11 +94,12 @@ public class FacebookLoginSuccessHandler implements AuthenticationSuccessHandler
         // 4. Setam sesiunea
         HttpSession session = request.getSession();
         session.setAttribute("logged_in", true);
-        session.setAttribute("user_id", user.getIdUser()); // Verifică dacă getter-ul e getId() sau getIdUser()
+        session.setAttribute("user_id", user.getIdUser());
         session.setAttribute("username", user.getUsername());
         session.setAttribute("email", user.getEmail());
-        session.setAttribute("profile_pic", user.getImagePath());
+        session.setAttribute("profile_pic", user.getImagePath()); // Acum va fi link-ul de FB
 
+        System.out.println("POZA FINALA = " + photoUrl);
         // 5. Redirect acasa
         response.sendRedirect("/index");
     }

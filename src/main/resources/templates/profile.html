@@ -7,13 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Profilul Meu - Poli Olympics</title>
 
-    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
     <link th:href="@{/css/profile_style.css}" rel="stylesheet">
+
 </head>
 
-<body id="page-top" style="background-color: #f8f9fc;">
+<body id="page-top">
 
 <div id="wrapper">
 
@@ -22,111 +25,130 @@
         <div id="content">
             <div th:replace="fragments :: topbar"></div>
 
-            <div class="profile-header-bg">
-                <div class="container">
-                    <h1 class="font-weight-bold text-white mb-1">Setări Profil</h1>
-                    <p class="text-white-50">Gestionează informațiile tale personale</p>
+
+            <div class="container-fluid">
+
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Setări Profil</h1>
                 </div>
 
-                <div class="profile-avatar-wrapper">
-                    <div style="position: relative; display: inline-block;">
-                        <img th:src="@{${profilePicUrl}}" id="img_preview" class="profile-avatar" alt="Avatar">
-
-                        <label for="file_poza" class="edit-avatar-btn" title="Schimbă poza">
-                            <i class="fas fa-camera fa-sm"></i>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container" style="max-width: 900px;">
-
-                <div th:if="${success}" class="alert alert-success alert-dismissible fade show shadow-sm border-0" role="alert">
+                <div th:if="${success}" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
                     <i class="fas fa-check-circle mr-2"></i> <span th:text="${success}"></span>
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                 </div>
 
                 <form method="POST" th:action="@{/profile}" enctype="multipart/form-data">
-                    <input type="file" id="file_poza" name="file_poza" style="display: none;" accept="image/*">
+                    <div class="row">
 
-                    <div class="card card-modern bg-white mb-5">
-                        <div class="card-body p-5">
-
-                            <h5 class="text-gray-900 font-weight-bold mb-4">
-                                <i class="fas fa-user-edit text-primary mr-2"></i> Date Personale
-                            </h5>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <label class="input-label">Nume Utilizator</label>
-                                    <input type="text" class="form-control form-control-modern" th:value="${user.username}" readonly
-                                           style="background-color: #eaecf4; cursor: not-allowed;">
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Poza de Profil</h6>
                                 </div>
-                                <div class="col-md-6 mb-4">
-                                    <label class="input-label">Email</label>
-                                    <input type="email" class="form-control form-control-modern" th:value="${user.email}" readonly
-                                           style="background-color: #eaecf4; cursor: not-allowed;">
-                                </div>
-                            </div>
+                                <div class="card-body text-center">
+                                    <div class="profile-img-container mb-3">
+                                        <img th:src="${session.profile_pic != null and session.profile_pic.startsWith('http') ? session.profile_pic : (session.profile_pic != null ? '/images/' + session.profile_pic : '/img/undraw_profile.svg')}"
+                                             id="img_preview"
+                                             class="profile-img-rounded shadow-sm"
+                                             alt="Avatar">
 
-                            <hr class="my-4 border-light">
+                                        <label for="file_poza" class="camera-btn shadow-sm" title="Schimbă poza">
+                                            <i class="fas fa-camera"></i>
+                                        </label>
+                                        <input type="file" id="file_poza" name="file_poza" style="display: none;" accept="image/*">
+                                    </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <label class="input-label">Nume</label>
-                                    <input type="text" class="form-control form-control-modern" name="nume"
-                                           th:value="${participant.nume}" placeholder="Introduceți numele">
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <label class="input-label">Prenume</label>
-                                    <input type="text" class="form-control form-control-modern" name="prenume"
-                                           th:value="${participant.prenume}" placeholder="Introduceți prenumele">
+                                    <div class="small font-italic text-muted mb-4">JPG sau PNG (Max 5MB)</div>
+                                    <h5 class="font-weight-bold text-gray-800" th:text="${session.username}">Username</h5>
+                                    <p class="text-muted mb-0" th:text="${session.email}">email@example.com</p>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-8 mb-4">
-                                    <label class="input-label">Facultate</label>
-                                    <select class="form-control form-control-modern" name="facultate">
-                                        <option th:text="${participant.facultate}" th:value="${participant.facultate}" selected>Selectat Curent</option>
-
-                                        <option value="Inginerie Electrica">Inginerie Electrică</option>
-                                        <option value="Energetica">Energetică</option>
-                                        <option value="Automatica">Automatică și Calculatoare</option>
-                                        <option value="ETTI">Electronică, Telecomunicații și Tehnologia Informației (ETTI)</option>
-                                        <option value="Mecanica">Inginerie Mecanică și Mecatronică</option>
-                                        <option value="IIR">Inginerie Industrială și Robotică (IIR)</option>
-                                        <option value="ISB">Ingineria Sistemelor Biotehnice</option>
-                                        <option value="Transporturi">Transporturi</option>
-                                        <option value="Aerospatiala">Inginerie Aerospațială</option>
-                                        <option value="Materiale">Știința și Ingineria Materialelor</option>
-                                        <option value="Chimie">Inginerie Chimică și Biotehnologii</option>
-                                        <option value="FILS">Inginerie în Limbi Străine (FILS)</option>
-                                        <option value="Stiinte Aplicate">Științe Aplicate</option>
-                                        <option value="Inginerie Medicala">Inginerie Medicală</option>
-                                        <option value="FAIMA">Antreprenoriat, Ingineria și Managementul Afacerilor (FAIMA)</option>
-                                    </select>
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Detalii Cont</h6>
                                 </div>
-                                <div class="col-md-4 mb-4">
-                                    <label class="input-label">An Studiu</label>
-                                    <input type="number" class="form-control form-control-modern" name="anStudiu"
-                                           th:value="${participant.anStudiu}" min="1" max="6">
+                                <div class="card-body">
+
+                                    <h6 class="heading-small text-muted mb-4">Informații Utilizator (Read-Only)</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label small font-weight-bold">Username</label>
+                                                    <input type="text" class="form-control" th:value="${session.username}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label small font-weight-bold">Email Address</label>
+                                                    <input type="email" class="form-control" th:value="${session.email}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4">
+
+                                    <h6 class="heading-small text-muted mb-4">Informații Student</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label small font-weight-bold">Nume</label>
+                                                    <input type="text" class="form-control" name="nume" th:value="${participant.nume}" placeholder="Numele tău">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label small font-weight-bold">Prenume</label>
+                                                    <input type="text" class="form-control" name="prenume" th:value="${participant.prenume}" placeholder="Prenumele tău">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="form-group">
+                                                    <label class="form-control-label small font-weight-bold">Facultate</label>
+                                                    <select class="form-control" name="facultate">
+                                                        <option th:text="${participant.facultate}" th:value="${participant.facultate}" selected>Selectat Curent</option>
+                                                        <option value="Inginerie Electrica">Inginerie Electrică</option>
+                                                        <option value="Automatica">Automatică și Calculatoare</option>
+                                                        <option value="ETTI">ETTI</option>
+                                                        <option value="Mecanica">Mecanică</option>
+                                                        <option value="Transporturi">Transporturi</option>
+                                                        <option value="FILS">FILS</option>
+                                                        <option value="Stiinte Aplicate">Științe Aplicate</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="form-control-label small font-weight-bold">An Studiu</label>
+                                                    <input type="number" class="form-control" name="anStudiu" th:value="${participant.anStudiu}" min="1" max="6">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4 text-right">
+                                        <button type="submit" class="btn btn-primary btn-icon-split">
+                                            <span class="icon text-white-50">
+                                              <i class="fas fa-save"></i>
+                                            </span>
+                                            <span class="text">Salvează Modificările</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="mt-4 text-right">
-                                <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm" style="border-radius: 50px; font-weight: 700;">
-                                    Salvează Modificările
-                                </button>
-                            </div>
-
                         </div>
                     </div>
                 </form>
 
             </div>
         </div>
-
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
@@ -134,20 +156,23 @@
                 </div>
             </div>
         </footer>
+
     </div>
 </div>
-
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 15px;">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title font-weight-bold">Ești sigur?</h5>
-                <button class="close" type="button" data-dismiss="modal"><span>&times;</span></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gata de plecare?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
-            <div class="modal-body text-muted">Selectează "Logout" pentru a închide sesiunea curentă.</div>
-            <div class="modal-footer border-0">
-                <button class="btn btn-light rounded-pill" type="button" data-dismiss="modal">Anulează</button>
-                <a class="btn btn-primary rounded-pill px-4" th:href="@{/login}">Logout</a>
+            <div class="modal-body">Selectează "Logout" mai jos dacă ești gata să închei sesiunea curentă.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Anulează</button>
+                <a class="btn btn-primary" th:href="@{/logout}">Logout</a>
             </div>
         </div>
     </div>
@@ -155,10 +180,11 @@
 
 <script th:src="@{vendor/jquery/jquery.min.js}"></script>
 <script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{vendor/jquery-easing/jquery.easing.min.js}"></script>
 <script th:src="@{js/sb-admin-2.min.js}"></script>
 
 <script>
-    // Script pentru preview instant la poză când userul alege fișierul
+    // Preview imagine
     document.getElementById('file_poza').addEventListener('change', function(e) {
         if (e.target.files && e.target.files[0]) {
             var reader = new FileReader();

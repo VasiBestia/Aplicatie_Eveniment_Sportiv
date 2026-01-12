@@ -1,119 +1,199 @@
-.bg-poli-dark {
-        background-color: #2c3e50 !important; /* Nuanța de gri-albăstrui închis */
-        background-image: none !important;     /* Elimină gradientul default */
-    }
+/* ============================================================
+   1. IMPORTURI & SETĂRI GLOBALE
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
 
-    /* Stilizare Logo: POLI OLYMPICS pe 2 rânduri */
-    .sidebar-brand-text {
-        text-transform: uppercase;
-        font-weight: 800;
-        letter-spacing: 0.1rem;
-        font-size: 0.9rem;
-        line-height: 1.2;
-        text-align: left; /* Sau center, depinde de preferință */
-    }
+body {
+    font-family: 'Poppins', sans-serif !important;
+    background-color: #f8f9fc; /* Gri deschis business */
+    color: #5a5c69;
+}
 
-    /* Liniile despărțitoare mai discrete */
-    .sidebar-dark hr.sidebar-divider {
-        border-top: 1px solid rgba(255, 255, 255, 0.15);
-    }
+/* ============================================================
+   2. SIDEBAR MODERN (Codul tău integrat)
+   ============================================================ */
 
-    /* Titlul mic "COMPETITIE" */
-    .sidebar-heading {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        font-weight: bold;
-        color: rgba(255, 255, 255, 0.4) !important;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
+/* Gradientul specific cerut de tine */
+.bg-gradient-primary {
+    background-color: #2c3e50; /* Fallback */
+    background-image: linear-gradient(180deg, #2c3e50 10%, #4e73df 100%) !important;
+    background-size: cover;
+}
 
-    /* Link-urile */
-    .nav-link span {
-        font-weight: 600;
-        font-size: 0.9rem;
-    }
+.sidebar {
+    min-height: 100vh;
+}
 
-        /* --- 2. BANNER PROFIL (Stilul Dashboard) --- */
-        .profile-header-bg {
-            background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
-            height: 250px;
-            border-radius: 0 0 25px 25px; /* Rotunjit jos */
-            position: relative;
-            margin-bottom: 80px; /* Loc pentru poza care iese în afară */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            box-shadow: 0 10px 30px rgba(34, 74, 190, 0.15);
-        }
+.sidebar .sidebar-brand-text {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
 
-        /* --- 3. POZA "PLUTITOARE" --- */
-        .profile-avatar-wrapper {
-            position: absolute;
-            bottom: -60px; /* Trage poza în afara bannerului */
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-        }
+.sidebar hr.sidebar-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
 
-        .profile-avatar {
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 5px solid #fff; /* Bordură albă groasă */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-            background-color: #fff;
-        }
+.sidebar .nav-item .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    transition: all 0.2s;
+}
 
-        /* Butonul de editare poză (mic, peste poză) */
-        .edit-avatar-btn {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            background: #f6c23e;
-            color: #2c3e50;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
-        }
-        .edit-avatar-btn:hover { transform: scale(1.1); }
+.sidebar .nav-item .nav-link:hover {
+    color: #fff !important;
+}
 
-        /* --- 4. FORMULARE MODERNE --- */
-        .card-modern {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.05);
-        }
+.sidebar .nav-item.active .nav-link {
+    color: #fff !important;
+    font-weight: 700;
+}
 
-        .form-control-modern {
-            background-color: #f8f9fc;
-            border: 1px solid #e3e6f0;
-            border-radius: 10px;
-            height: 50px;
-            padding-left: 20px;
-            transition: all 0.3s;
-        }
+/* ============================================================
+   3. TOPBAR (Bara de sus)
+   ============================================================ */
 
-        .form-control-modern:focus {
-            background-color: #fff;
-            border-color: #4e73df;
-            box-shadow: 0 0 0 4px rgba(78, 115, 223, 0.1);
-        }
+.topbar {
+    height: 4.375rem;
+    background-color: #fff !important;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15) !important;
+}
 
-        .input-label {
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #858796;
-            margin-bottom: 8px;
-            margin-left: 5px;
-        }
+/* Poza mică din dreapta sus */
+.img-profile {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #eaecf4;
+}
+
+/* ============================================================
+   4. CARDURI PROFIL (Specific pentru Pagina de Profil)
+   ============================================================ */
+
+/* Stilizare generală carduri */
+.card {
+    border: none;
+    border-radius: 15px; /* Colțuri rotunjite modern */
+    transition: transform 0.2s;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #f0f2f5;
+    border-radius: 15px 15px 0 0 !important;
+    padding: 1.5rem;
+}
+
+/* 4.1 POZA DE PROFIL (Card Stânga) */
+.profile-img-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+}
+
+.profile-img-rounded {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #fff; /* Bordură albă groasă */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Umbră fină */
+}
+
+/* Butonul flotant de cameră */
+.camera-btn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    color: white;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(78, 115, 223, 0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efect de bounce */
+    z-index: 10;
+}
+
+.camera-btn:hover {
+    transform: scale(1.15) rotate(10deg);
+    background: #2e59d9;
+}
+
+/* 4.2 FORMULAR DETALII (Card Dreapta) */
+
+/* Label-uri mici deasupra input-urilor */
+.form-control-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #858796;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Input-uri Read-Only (Username/Email) */
+.form-control[readonly] {
+    background-color: #eaecf4; /* Gri SB Admin */
+    color: #6e707e;
+    border-color: transparent;
+    cursor: not-allowed;
+    font-weight: 600;
+}
+
+/* Input-uri Editabile */
+.form-control {
+    border-radius: 10px;
+    padding: 1.2rem 1rem;
+    font-size: 0.9rem;
+    border: 1px solid #d1d3e2;
+}
+
+.form-control:focus {
+    border-color: #4e73df;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Butonul de Salvare */
+.btn-primary {
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    border: none;
+    border-radius: 50px; /* Pill shape */
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(78, 115, 223, 0.4);
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(78, 115, 223, 0.6);
+}
+
+/* Divider fin */
+hr.my-4 {
+    border-top: 1px solid #eaecf4;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+/* ============================================================
+   5. ALERTE & FOOTER
+   ============================================================ */
+
+.alert {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+footer.sticky-footer {
+    background-color: transparent !important;
+    margin-top: 2rem;
+}

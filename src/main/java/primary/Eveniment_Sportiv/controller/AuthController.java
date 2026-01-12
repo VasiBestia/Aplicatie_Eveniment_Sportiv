@@ -153,59 +153,81 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(
+    public String registerUser(
             @RequestParam("username") String username,
             @RequestParam("email") String email,
             @RequestParam("password") String password,
-            @RequestParam("retype_password") String retypePassword
+            @RequestParam("retype_password") String retypePassword,
+            Model model // <--- Esențial pentru a trimite eroarea în HTML
     ) {
+        // 1. Verificăm câmpurile goale
         if (username.isEmpty() || email.isEmpty() || password.isEmpty() || !password.equals(retypePassword)) {
-            return ResponseEntity.badRequest().body("ERROR: Te rog completează toate câmpurile și asigură-te că parolele se potrivesc.");
+            model.addAttribute("error", "Te rog completează toate câmpurile și asigură-te că parolele se potrivesc.");
+            return "register"; // Rămânem pe pagina de register
         }
 
+        // 2. Verificăm lungimea parolei
         if (password.length() < 8) {
-            return ResponseEntity.badRequest().body("ERROR: Parola trebuie să aibă minim 8 caractere.");
+            model.addAttribute("error", "Parola trebuie să aibă minim 8 caractere.");
+            return "register";
         }
 
+        // 3. Verificăm complexitatea parolei (Caractere speciale)
         String specialCharsPattern = ".*[!@#$%^&*(),.?\":{}|<>].*";
         if (!password.matches(specialCharsPattern)) {
-            return ResponseEntity.badRequest().body("ERROR: Parola trebuie să conțină cel puțin un caracter special.");
+            model.addAttribute("error", "Parola trebuie să conțină cel puțin un caracter special.");
+            return "register";
         }
 
+        // 4. Verificăm litere
         if (!password.matches(".*[a-zA-Z].*")) {
-            return ResponseEntity.badRequest().body("ERROR: Parola trebuie să conțină cel puțin o literă.");
+            model.addAttribute("error", "Parola trebuie să conțină cel puțin o literă.");
+            return "register";
         }
 
+        // 5. Verificăm cifre
         if (!password.matches(".*\\d.*")) {
-            return ResponseEntity.badRequest().body("ERROR: Parola trebuie să conțină cel puțin o cifră.");
+            model.addAttribute("error", "Parola trebuie să conțină cel puțin o cifră.");
+            return "register";
         }
 
+        // 6. Verificăm formatul de Email (Regex)
         String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         if (!email.matches(emailRegex)) {
-            return ResponseEntity.badRequest().body("ERROR: Formatul adresei de email este invalid.");
+            model.addAttribute("error", "Formatul adresei de email este invalid.");
+            return "register";
         }
 
         try {
-            if (userRepository.existsByUsername(username) || userRepository.existsByEmail(email)) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("ERROR: Numele de utilizator sau email-ul există deja în baza de date.");
+            // 7. Verificăm duplicatele în baza de date
+            if (userRepository.existsByUsername(username)) {
+                model.addAttribute("error", "Acest nume de utilizator este deja folosit.");
+                return "register";
+            }
+            if (userRepository.existsByEmail(email)) {
+                model.addAttribute("error", "Acest email este deja înregistrat.");
+                return "register";
             }
 
+            // 8. Totul e OK -> Salvăm Userul
             String hashedPassword = passwordEncoder.encode(password);
 
             UserAccount newUser = new UserAccount();
             newUser.setUsername(username);
             newUser.setEmail(email);
             newUser.setParola(hashedPassword);
+            // Dacă ai câmp 'provider', poți seta: newUser.setProvider("LOCAL");
 
             userRepository.save(newUser);
 
-            return ResponseEntity.status(HttpStatus.SEE_OTHER)
-                    .header("Location", "/login")
-                    .body("Înregistrare reușită. Redirecționare...");
+            // 9. Redirect către login cu un mic parametru de succes (opțional)
+            // Nu folosim Model aici pentru că redirect-ul șterge modelul.
+            return "redirect:/login";
 
         } catch (Exception e) {
             System.err.println("Eroare la înregistrare: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Eroare de server la înregistrare.");
+            model.addAttribute("error", "Eroare de server la înregistrare. Încearcă din nou.");
+            return "register";
         }
     }
 
